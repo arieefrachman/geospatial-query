@@ -2,6 +2,7 @@ const path = require('path');
 const express = require('express');
 const dotenv = require('dotenv');
 const cors = require('cors');
+const compression = require('compression');
 const connectDB = require('./config/db');
 
 dotenv.config({
@@ -11,8 +12,12 @@ dotenv.config({
 connectDB();
 
 const app = express();
+app.use(compression({
+    level: 9
+}));
 app.use(express.json());
 app.use(cors());
+app.use(express.static('public'));
 
 app.use('/api', require('./routes/routes'));
 
